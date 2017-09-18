@@ -4,13 +4,13 @@
 #' @description Uma funcao para cortar um raster com base em um shapefile informado.
 #'
 #' @param abio os rasters a serem cortados. Aceita um objeto do tipo _stack_
-#' @param shape.dir aqui tem duas op??es. A primeira ? informar um ojeto no formato shapefile. A segunda op??o ? informar um diret?rio que contem o shapefile.
-#' @param extension extens?o de sa?da dos rasters cortados. O padr?o ? .asc, veja \code{\link[raster]{write.raster}} para mais possibilidades de formatos de sa?da.
-#' @param br l?gico. Se TRUE, utiliza o shape do brasil formecido por \code{\link[maptools]{wrld_simpl}}. Se FALSE (padr?o), utliza o shape informado.
-#' @param plot l?gico. Plota um dos rasters cortados.
-#' @param trim l?gico. Se TRUE, exclui os pixels com NA (mais demorado). Se FALSE (padr?o), mant?m os NAs.
+#' @param shape.dir aqui tem duas opções. A primeira é informar um ojeto no formato shapefile. A segunda opção é informar um diretório que contem o shapefile.
+#' @param extension extensão de saída dos rasters cortados. O padrão é .asc, veja \code{\link[raster]{write.raster}} para mais possibilidades de formatos de sa?da.
+#' @param br lógico. Se TRUE, utiliza o shape do brasil formecido por \code{\link[maptools]{wrld_simpl}}. Se FALSE (padrão), utliza o shape informado.
+#' @param plot lógico. Plota um dos rasters cortados.
+#' @param trim lógico. Se TRUE, exclui os pixels com NA (mais demorado). Se FALSE (padr?o), mant?m os NAs.
 #'
-#' @details Quando argumento shapedir for uma pasta onde cont?m o shape de refer?ncia, esta pasta deve conter somente o shape e seus arquivos auxiliares.
+#' @details Quando argumento shapedir for uma pasta onde contém o shape de referência, esta pasta deve conter somente o shape e seus arquivos auxiliares.
 #'
 #' @return Arquivos raster em uma pasta chamada "Cortados".
 #'
@@ -48,7 +48,7 @@ cut.raster =
 
     if(class(shape.dir)== "character") {
       shape = rgdal::readOGR(list.files(shape.dir, pattern = ".shp", full.names = T)[1])
-        stop("N?o selecionou a pasta contendo o shape de corte")
+        stop("Não selecionou a pasta contendo o shape de corte")
     } else (shape = shape.dir)
 
 
