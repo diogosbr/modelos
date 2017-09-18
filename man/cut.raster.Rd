@@ -8,7 +8,7 @@ cut.raster(abio, shape.dir, extension = ".asc", br = FALSE, plot = TRUE,
   trim = FALSE)
 }
 \arguments{
-\item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _stack_}
+\item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _RasterStack_, gerados pela função \code{\link[raster]{stack}}}
 
 \item{shape.dir}{aqui tem duas opções. A primeira é informar um ojeto no formato shapefile. A segunda opção é informar um diretório que contem o shapefile.}
 
@@ -36,7 +36,7 @@ cut.raster(abio = predictors, br=T, extension = ".tif")
 
 }
 \seealso{
-\code{\link[raster]{crop}}, \code{\link[raster]{mask}}
+\code{\link[raster]{crop}}, \code{\link[raster]{mask}}, \code{\link[raster]{stack}}
 }
 \author{
 Diogo S. B. Rocha

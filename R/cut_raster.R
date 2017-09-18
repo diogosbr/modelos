@@ -3,7 +3,7 @@
 #'
 #' @description Uma função para cortar um raster com base em um shapefile informado.
 #'
-#' @param abio os rasters a serem cortados. Aceita um objeto do tipo _stack_
+#' @param abio os rasters a serem cortados. Aceita um objeto do tipo _RasterStack_, gerados pela função \code{\link[raster]{stack}}
 #' @param shape.dir aqui tem duas opções. A primeira é informar um ojeto no formato shapefile. A segunda opção é informar um diretório que contem o shapefile.
 #' @param extension extensão de saída dos rasters cortados. O padrão é .asc, veja \code{\link[raster]{write.raster}} para mais possibilidades de formatos de sa?da.
 #' @param br lógico. Se TRUE, utiliza o shape do brasil formecido por \code{\link[maptools]{wrld_simpl}}. Se FALSE (padrão), utliza o shape informado.
@@ -16,7 +16,7 @@
 #'
 #' @author Diogo S. B. Rocha
 #'
-#' @seealso \code{\link[raster]{crop}}, \code{\link[raster]{mask}}
+#' @seealso \code{\link[raster]{crop}}, \code{\link[raster]{mask}}, \code{\link[raster]{stack}}
 #'
 #' @examples
 #' fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
@@ -39,7 +39,8 @@ cut.raster =
       #importando shape do brasil
       if(br==T){
         data(wrld_simpl, package = "maptools")
-        br=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
+        shape.dir=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
+        shape=shape.dir
       }else(stop("Não selecionou a pasta contendo o shape de corte"))
       }
 
@@ -49,11 +50,8 @@ cut.raster =
     } else (shape = shape.dir)
 
 
-
-
     crs(shape) = crs(abio)
-    crs(br) = crs(abio)
-
+   
     # loop para cortar todos os rasters
 
     # sem trim
@@ -66,7 +64,7 @@ cut.raster =
                 sep = "", extension), overwrite = TRUE)
 
             print(Sys.time())
-            cat("\n", paste("T? indo", i))
+            cat("\n", paste("Tá indo", i))
 
             fim1 = Sys.time()
             cat(paste("\n", round(as.numeric(fim1 - ini1), 2), units(fim1 - ini1)))
