@@ -19,8 +19,9 @@
 #' @seealso \code{\link[raster]{crop}}, \code{\link[raster]{mask}}, \code{\link[raster]{stack}}
 #'
 #' @examples
+#' 
 #' fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-#' predictors <- stack(fnames)
+#' predictors <- raster::stack(fnames)
 #' cut.raster(abio = predictors, br=T, extension = ".tif")
 #'
 #' @import raster

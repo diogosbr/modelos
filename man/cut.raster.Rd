@@ -30,8 +30,9 @@ Uma função para cortar um raster com base em um shapefile informado.
 Quando argumento shapedir for uma pasta onde contém o shape de referência, esta pasta deve conter somente o shape e seus arquivos auxiliares.
 }
 \examples{
+
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-predictors <- stack(fnames)
+predictors <- raster::stack(fnames)
 cut.raster(abio = predictors, br=T, extension = ".tif")
 
 }
