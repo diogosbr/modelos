@@ -29,6 +29,7 @@ fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pa
 predictors <- stack(fnames)
 toKML(modelo = predictors, name = "exemplo")
 
+
 }
 \seealso{
 \code{\link[plotKML]{plotKML}}

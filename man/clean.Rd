@@ -21,10 +21,9 @@ Uma funcao para retirar os pontos que estão fora da extens?o do raster e manter
 Esta função é usada internamente na função \code{\link[modelos]{modelos}}.
 }
 \examples{
-require(dismo)
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
 predictors <- stack(fnames)
-cut.raster(abio = predictors, br=T, extension = ".tif")
+clean(coord = manimax, abio = predictors)
 
 }
 \seealso{

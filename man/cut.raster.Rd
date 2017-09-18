@@ -18,13 +18,13 @@ cut.raster(abio, shape.dir, extension = ".asc", br = FALSE, plot = TRUE,
 
 \item{plot}{lógico. Plota um dos rasters cortados.}
 
-\item{trim}{lógico. Se TRUE, exclui os pixels com NA (mais demorado). Se FALSE (padr?o), mant?m os NAs.}
+\item{trim}{lógico. Se TRUE, exclui os pixels com NA (mais demorado). Se FALSE (padrão), mantem os NAs.}
 }
 \value{
 Arquivos raster em uma pasta chamada "Cortados".
 }
 \description{
-Uma funcao para cortar um raster com base em um shapefile informado.
+Uma função para cortar um raster com base em um shapefile informado.
 }
 \details{
 Quando argumento shapedir for uma pasta onde contém o shape de referência, esta pasta deve conter somente o shape e seus arquivos auxiliares.
