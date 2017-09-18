@@ -1,4 +1,4 @@
-﻿Package: modelos
+Package: modelos
 Title: Modelagem de nicho ecológico
 Version: 0.0.1
 Authors@R: person("Diogo", "Rocha", email = "diogosbr@gmail.com", role = c("aut", "cre"))
