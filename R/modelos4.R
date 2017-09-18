@@ -1,29 +1,29 @@
 #' @title Corta raster com base em um shape
-#' @name cut.raster
+#' @name modelos
 #'
-#' @description Uma funcao para cortar um raster com base em um shapefile informado.
+#' @description Uma funcao para geral modelos de nicho ecológico.
 #'
 #' @param coord data.frame. Tabela com os dados de oco?ncia da esp?cie. Deve conter apenas duas colunas: long e lat, nesta ordem.
 #' @param abio os rasters a serem cortados. Aceita um objeto do tipo _stack_
-#' @param k n?mero de parti??es. Padr?o ? 3.
-#' @param diretorio nome do diret?rio a ser criado com os resultados na modelagem.
-#' @param plot l?gico. Plota o modelo final.
+#' @param k número de partições. O padrão são 3.
+#' @param diretorio nome do diretório a ser criado com os resultados na modelagem.
+#' @param plot lógico. Plota o modelo final.
 #' @param bc bioclim
 #' @param mx Maxent
 #' @param GLM Generalized linear model
 #' @param RF Random Forest (regression)
 #' @param SVM Support Vector Machine
 #' @param dm Domain
-#' @param mah dist?ncia de Mahalanobis
+#' @param mah distância de Mahalanobis
 #' @param proj stack com as vari?veis onde ser? projetado o modelo. Caso n?o seja informado, o modelo ? projetado no mesmo local de cria??o do modelo (informado em abio).
-#' @param buffer dist?ncia escolhida para gerar um buffer em torno dos pontos de ocorr?ncia onde ser? gerados os pontos de pseudo-aus?ncia. "mean" ? a dist?ncia m?dia entre os pontos e "max" ? a dist?ncia m?xima entre os pontos.
-#' @param geo.filt l?gico. Se TRUE (padr?o), mant?m apenas os pontos que estejam no m?nimo 20km distantes um do outro.
-#' @param mod quando o modelo ? cortado para gerar o ensemble. "before" cada parti??o ? cortada pelo seu pr?prio TSSth. "after" o ensemble de cada algoritmo ? cortado pelo TSSthm?dio das parti??es.
-#' @param tss num?rico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.
+#' @param buffer dist?ncia escolhida para gerar um buffer em torno dos pontos de ocorr?ncia onde ser? gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.
+#' @param geo.filt l?gico. Se TRUE (padrão), mant?m apenas os pontos que estejam no m?nimo 20km distantes um do outro.
+#' @param mod quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.
+#' @param tss numérico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.
 #'
-#' @details A fun??o mais complexa deste pacote
+#' @details A função mais complexa deste pacote
 #'
-#' @return Arquivos raster em um diret?rio indicado pelo usu?rio.
+#' @return Arquivos raster em um diretório indicado pelo usu?rio.
 #'
 #' @author Diogo S. B. Rocha
 #'
@@ -47,7 +47,7 @@
 modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx = F, GLM = F, RF = F,
                    SVM = F, dm = F, mah = F, proj, buffer = 'none', geo.filt = T, mod = 'before', tss = 0) {
 
-  if(missing(abio)){stop("Informe as vari?veis abi?ticas")}else(predictors=abio)
+  if(missing(abio)){stop("Informe as variáveis abióticas")}else(predictors=abio)
   original = getwd()
   # escolha da pasta
   dir.create(paste0("./", diretorio))
@@ -60,7 +60,6 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   }
 
   #importando shape do brasil
-  require(maptools)
   data(wrld_simpl)
   br=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
 
@@ -74,10 +73,6 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     warning("Maxent foi colocado no diret?rio")
   }
 
-  # Abrindo bibliotecas necess?rias####
-  library(dismo)
-  library(rgdal)
-
   ##--------------------------##
   # Pontos de ocorr?ncia####
   ##------------------------##
@@ -88,7 +83,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     if (dim(pts)[2] == 2) {
       pts = pts
     } else (stop("Verique o n?mero de colunas de planilha com as coordenadas"))
-  } else (stop("N?o existe objeto com os pontos de ocorr?ncia.", "Verifique o nome do objeto"))
+  } else (stop("Não existe objeto com os pontos de ocorrência.", "Verifique o nome do objeto"))
 
   source("https://raw.githubusercontent.com/diogosbr/modelagem/master/clean.R")
   pts1 = clean(pts, predictors = predictors)
@@ -101,7 +96,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     r=raster(extent(range(pts1[,1]), range(pts1[,2])) + res)
     res(r)=res
     pts1=gridSample(pts1,r, n=1)
-    cat(paste0(dim(pts1)[1], ' ap?s o filtro geogr?fico de 20Km'))
+    cat(paste0(dim(pts1)[1], ' após o filtro geográfico de 20Km'))
     aa$geo.filt=dim(pts1)[1]
   }
   write.table(aa, "Nocc.csv", row.names = F, sep = ";")
@@ -150,7 +145,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     # Bioclim #####
 
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "Bioclim"))
+      cat(c("\n", "Começou a partição", i, "Bioclim"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -221,7 +216,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     # Maxent #####
 
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "Maxent"))
+      cat(c("\n", "Começou a partição", i, "Maxent"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -291,7 +286,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (dm == T) {
     # Domain #####
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "Domain"))
+      cat(c("\n", "Começou a partição", i, "Domain"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -362,7 +357,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     # Mahalanobis #####
 
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "Mahalanobis"))
+      cat(c("\n", "Começou a partição", i, "Mahalanobis"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -432,7 +427,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (GLM == T) {
     # GLM ####
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "GLM"))
+      cat(c("\n", "Começou a partição", i, "GLM"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -520,9 +515,8 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
   if (RF == T) {
     # Random Forest ####
-    library(randomForest)
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "RandomForest"))
+      cat(c("\n", "Começou a partição", i, "RandomForest"))
 
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
@@ -534,7 +528,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
       envtrain <- extract(predictors, train)
       envtrain <- data.frame(na.omit(cbind(pa = pb_train, envtrain)))
 
-      RF <- randomForest(pa ~ ., data = envtrain)
+      RF <- randomForest::randomForest(pa ~ ., data = envtrain)
       e = evaluate(pres_test, backg_test, RF, predictors)
       tr = e@t[which.max(e@TPR + e@TNR)]
       TSS.calc=max(e@TPR + e@TNR) - 1
@@ -598,9 +592,8 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
   if (SVM == T) {
     # SVM ####
-    library(kernlab)
     for (i in 1:k) {
-      cat(c("\n", "Come?ou a parti??o", i, "SVM"))
+      cat(c("\n", "Começou a partição", i, "SVM"))
 
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
@@ -613,7 +606,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
       envtrain <- data.frame(na.omit(cbind(pa = pb_train, envtrain)))
 
       #SVM <- ksvm(pa ~ ., data = envtrain)
-      SVM <- ksvm(pa ~ ., data = envtrain, cross = k)
+      SVM <- kernlab::ksvm(pa ~ ., data = envtrain, cross = k)
 
       e = evaluate(pres_test, backg_test, SVM, predictors)
       tr = e@t[which.max(e@TPR + e@TNR)]
@@ -682,9 +675,10 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
   # Ensemble final ####
 
+  cat(c("\n", "Começou ensemble geral"))
   names(aval)[1:6] = names(threshold(e))
-  names(aval)[7:11] = c("Algoritmo", "AUC", "TSS", "TSSth", "Parti??o")
-  write.table(na.omit(aval), "Avalia??o.csv", sep = ";", dec = ".",row.names = F)
+  names(aval)[7:11] = c("Algoritmo", "AUC", "TSS", "TSSth", "Partição")
+  write.table(na.omit(aval), "Avaliação.csv", sep = ";", dec = ".",row.names = F)
 
   if(length(list.files("./ensembles", pattern = ".tif", full.names = T))!=0){
     final = stack(list.files("./ensembles", pattern = ".tif", full.names = T))
