@@ -11,18 +11,18 @@ toKML(modelo, name = "meuKML", zeros = FALSE, open = FALSE)
 
 \item{name}{nome do arquivo KML gerado.}
 
-\item{zeros}{l?gico. Se FALSE, os zeros do modelo s?o convertivos em NA.}
+\item{zeros}{lógico. Se FALSE, os zeros do modelo s?o convertivos em NA.}
 
-\item{open}{l?gico. Se TURE, abre o arquivo KML no Google Earth.}
+\item{open}{lógico. Se TURE, abre o arquivo KML no Google Earth.}
 }
 \value{
 data.frame contendo longitude e latitude.
 }
 \description{
-Uma fun??o para transformar o modelo de nicho de formato raster em arquivo KML.
+Uma função para transformar o modelo de nicho de formato raster em arquivo KML.
 }
 \details{
-aaa
+This function is a wrapper for \code{\link[plotKML]{plotKML}} the function from the roxygen2 package. See the documentation and vignettes of that package to learn how to use roxygen.
 }
 \examples{
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )

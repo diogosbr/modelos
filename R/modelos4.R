@@ -3,7 +3,7 @@
 #'
 #' @description Uma funcao para geral modelos de nicho ecológico.
 #'
-#' @param coord data.frame. Tabela com os dados de oco?ncia da esp?cie. Deve conter apenas duas colunas: long e lat, nesta ordem.
+#' @param coord data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.
 #' @param abio os rasters a serem cortados. Aceita um objeto do tipo _stack_
 #' @param k número de partições. O padrão são 3.
 #' @param diretorio nome do diretório a ser criado com os resultados na modelagem.
@@ -15,15 +15,15 @@
 #' @param SVM Support Vector Machine
 #' @param dm Domain
 #' @param mah distância de Mahalanobis
-#' @param proj stack com as vari?veis onde ser? projetado o modelo. Caso n?o seja informado, o modelo ? projetado no mesmo local de cria??o do modelo (informado em abio).
-#' @param buffer dist?ncia escolhida para gerar um buffer em torno dos pontos de ocorr?ncia onde ser? gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.
-#' @param geo.filt l?gico. Se TRUE (padrão), mant?m apenas os pontos que estejam no m?nimo 20km distantes um do outro.
+#' @param proj stack com as variáveis onde será projetado o modelo. Caso n?o seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).
+#' @param buffer distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.
+#' @param geo.filt lógico. Se TRUE (padrão), mantem apenas os pontos que estejam no mínimo 20km distantes um do outro.
 #' @param mod quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.
 #' @param tss numérico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.
 #'
 #' @details A função mais complexa deste pacote
 #'
-#' @return Arquivos raster em um diretório indicado pelo usu?rio.
+#' @return Arquivos raster em um diretório indicado pelo usuário.
 #'
 #' @author Diogo S. B. Rocha
 #'
@@ -38,10 +38,8 @@
 #'
 #' @import raster
 #' @import dismo
-#' @import kernlab
 #' @import maptools
 #' @import rgdal
-#' @import randomForest
 #'
 #' @export
 modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx = F, GLM = F, RF = F,

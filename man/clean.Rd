@@ -15,10 +15,10 @@ clean(coord, abio)
 data.frame contendo longitude e latitude.
 }
 \description{
-Uma funcao para retirar os pontos que est?o fora da extens?o do raster e manter, no m?ximo um registro por pixel.
+Uma funcao para retirar os pontos que estão fora da extens?o do raster e manter, no máximo um registro por pixel.
 }
 \details{
-aaa
+Esta função é usada internamente na função \code{\link[modelos]{modelos}}.
 }
 \examples{
 require(dismo)

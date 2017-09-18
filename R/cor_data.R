@@ -4,17 +4,17 @@
 #' @description Uma funcao para exibir um gráfico com as correla??es entre as vari?veis ambientais informadas.
 #'
 #' @param abio os rasters. Objeto do tipo _stack_
-#' @param plot l?gico. Plota um dos rasters cortados.
+#' @param plot lógico. Plota um dos rasters cortados.
 #' @param method a character string indicating which correlation coefficient (or covariance) is to be computed: "pearson" (default), "kendall", or "spearman".
-#' @param rep n?merico. N?mero de pontos gerados para extrair os valores dos raters e utilizar na correla??o. O padr?o ? 1000.
+#' @param rep numérico. Número de pontos gerados para extrair os valores dos raters e utilizar na correlação. O padrão é 1000.
 #'
-#' @details O ?ndice de correla??o utilizado ? spearman
+#' @details O índice de correlação utilizado é spearman
 #'
-#' @return Retorna uma tabela com os valores de correla??o entre as vari?veis.
+#' @return Retorna uma tabela com os valores de correlação entre as variáveis.
 #'
 #' @author Diogo S. B. Rocha
 #'
-#' @seealso aaa
+#' @seealso \code{\link[graphics]{pairs}}
 #'
 #' @examples
 #' fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )

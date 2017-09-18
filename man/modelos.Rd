@@ -9,7 +9,7 @@ modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
   buffer = "none", geo.filt = T, mod = "before", tss = 0)
 }
 \arguments{
-\item{coord}{data.frame. Tabela com os dados de oco?ncia da esp?cie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
+\item{coord}{data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
 
 \item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _stack_}
 
@@ -33,18 +33,18 @@ modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
 
 \item{mah}{distância de Mahalanobis}
 
-\item{proj}{stack com as vari?veis onde ser? projetado o modelo. Caso n?o seja informado, o modelo ? projetado no mesmo local de cria??o do modelo (informado em abio).}
+\item{proj}{stack com as variáveis onde será projetado o modelo. Caso n?o seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).}
 
-\item{buffer}{dist?ncia escolhida para gerar um buffer em torno dos pontos de ocorr?ncia onde ser? gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.}
+\item{buffer}{distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.}
 
-\item{geo.filt}{l?gico. Se TRUE (padrão), mant?m apenas os pontos que estejam no m?nimo 20km distantes um do outro.}
+\item{geo.filt}{lógico. Se TRUE (padrão), mantem apenas os pontos que estejam no mínimo 20km distantes um do outro.}
 
 \item{mod}{quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.}
 
 \item{tss}{numérico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.}
 }
 \value{
-Arquivos raster em um diretório indicado pelo usu?rio.
+Arquivos raster em um diretório indicado pelo usuário.
 }
 \description{
 Uma funcao para geral modelos de nicho ecológico.

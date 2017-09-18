@@ -9,20 +9,20 @@ cor.data(abio, plot = TRUE, method = "pearson", rep = 1000)
 \arguments{
 \item{abio}{os rasters. Objeto do tipo _stack_}
 
-\item{plot}{l?gico. Plota um dos rasters cortados.}
+\item{plot}{lógico. Plota um dos rasters cortados.}
 
 \item{method}{a character string indicating which correlation coefficient (or covariance) is to be computed: "pearson" (default), "kendall", or "spearman".}
 
-\item{rep}{n?merico. N?mero de pontos gerados para extrair os valores dos raters e utilizar na correla??o. O padr?o ? 1000.}
+\item{rep}{numérico. Número de pontos gerados para extrair os valores dos raters e utilizar na correlação. O padrão é 1000.}
 }
 \value{
-Retorna uma tabela com os valores de correla??o entre as vari?veis.
+Retorna uma tabela com os valores de correlação entre as variáveis.
 }
 \description{
 Uma funcao para exibir um gráfico com as correla??es entre as vari?veis ambientais informadas.
 }
 \details{
-O ?ndice de correla??o utilizado ? spearman
+O índice de correlação utilizado é spearman
 }
 \examples{
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
@@ -31,7 +31,7 @@ cor.data(abio = predictors)
 
 }
 \seealso{
-aaa
+\code{\link[graphics]{pairs}}
 }
 \author{
 Diogo S. B. Rocha
