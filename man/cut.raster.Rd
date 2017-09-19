@@ -5,10 +5,10 @@
 \title{Corta raster com base em um shape}
 \usage{
 cut.raster(abio, shape.dir, extension = ".asc", br = FALSE, plot = TRUE,
-  trim = FALSE)
+  diretorio = "Cortados", trim = FALSE)
 }
 \arguments{
-\item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _RasterStack_, gerados pela função \code{\link[raster]{stack}}}
+\item{abio}{um objeto com os rasters a serem cortados. Aceita um objeto do tipo RasterStack, gerado pela função \code{\link[raster]{stack}}}
 
 \item{shape.dir}{aqui tem duas opções. A primeira é informar um ojeto no formato shapefile. A segunda opção é informar um diretório que contem o shapefile.}
 

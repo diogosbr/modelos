@@ -9,20 +9,20 @@ clean(coord, abio)
 \arguments{
 \item{coord}{data.frame com as coordenadas}
 
-\item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _stack_}
+\item{abio}{um objeto com os rasters a serem cortados. Aceita um objeto do tipo RasterStack, gerado pela função \code{\link[raster]{stack}}}
 }
 \value{
 data.frame contendo longitude e latitude.
 }
 \description{
-Uma funcao para retirar os pontos que estão fora da extens?o do raster e manter, no máximo um registro por pixel.
+Uma função para retirar os pontos que estão fora da extensão do raster e manter, no máximo um registro por pixel.
 }
 \details{
 Esta função é usada internamente na função \code{\link[modelos]{modelos}}.
 }
 \examples{
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-predictors <- stack(fnames)
+predictors <- raster::stack(fnames)
 clean(coord = manimax, abio = predictors)
 
 }

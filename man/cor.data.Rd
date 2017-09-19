@@ -7,7 +7,7 @@
 cor.data(abio, plot = TRUE, method = "pearson", rep = 1000)
 }
 \arguments{
-\item{abio}{os rasters. Objeto do tipo _stack_}
+\item{abio}{os rasters. Objeto do tipo RasterStack, gerado pela função \code{\link[raster]{stack}}}
 
 \item{plot}{lógico. Plota um dos rasters cortados.}
 
@@ -19,14 +19,14 @@ cor.data(abio, plot = TRUE, method = "pearson", rep = 1000)
 Retorna uma tabela com os valores de correlação entre as variáveis.
 }
 \description{
-Uma funcao para exibir um gráfico com as correla??es entre as vari?veis ambientais informadas.
+Uma função para exibir um gráfico com as correlações entre as variáveis ambientais informadas.
 }
 \details{
-O índice de correlação utilizado é spearman
+Gráfico indicando as correlações
 }
 \examples{
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-predictors <- stack(fnames)
+predictors <- raster::stack(fnames)
 cor.data(abio = predictors)
 
 }

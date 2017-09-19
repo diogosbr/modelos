@@ -1,14 +1,14 @@
 #' @title Exibe um gráfico com as correlações entre as variáveis
 #' @name cor.data
 #'
-#' @description Uma funcao para exibir um gráfico com as correla??es entre as vari?veis ambientais informadas.
+#' @description Uma função para exibir um gráfico com as correlações entre as variáveis ambientais informadas.
 #'
-#' @param abio os rasters. Objeto do tipo _stack_
+#' @param abio os rasters. Objeto do tipo RasterStack, gerado pela função \code{\link[raster]{stack}}
 #' @param plot lógico. Plota um dos rasters cortados.
 #' @param method a character string indicating which correlation coefficient (or covariance) is to be computed: "pearson" (default), "kendall", or "spearman".
 #' @param rep numérico. Número de pontos gerados para extrair os valores dos raters e utilizar na correlação. O padrão é 1000.
 #'
-#' @details O índice de correlação utilizado é spearman
+#' @details Gráfico indicando as correlações
 #'
 #' @return Retorna uma tabela com os valores de correlação entre as variáveis.
 #'
@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-#' predictors <- stack(fnames)
+#' predictors <- raster::stack(fnames)
 #' cor.data(abio = predictors)
 #'
 #' @import raster
@@ -35,16 +35,14 @@ cor.data = function(abio, plot = TRUE, method = "pearson", rep = 1000) {
 
 
     if (plot == T) {
-        panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...) {
+        panel.cor <- function(x, y, digits = 2, prefix = "", ...) {
             usr <- par("usr")
             on.exit(par(usr))
             par(usr = c(0, 1, 0, 1))
-            r <- abs(cor(x, y, method = method))
+            r <- cor(x, y, method = method)
             txt <- format(c(r, 0.123456789), digits = digits)[1]
             txt <- paste0(prefix, txt)
-            if (missing(cex.cor))
-                cex.cor <- 0.8/strwidth(txt)
-            text(0.5, 0.5, txt, cex = cex.cor * r)
+            text(0.5, 0.5, txt, cex = 1.2)
         }
 
         panel.hist <- function(x, ...){
