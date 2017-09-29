@@ -31,7 +31,7 @@
 #'
 #' @examples
 #' fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-#' predictors <- stack(fnames)
+#' predictors <- raster::stack(fnames)
 #' occurence <- paste(system.file(package="dismo"), '/ex/bradypus.csv', sep='')
 #' occ <- read.table(occurence, header=TRUE, sep=',')[,-1]
 #' modelos(coord = occ, abio = predictors)
@@ -51,14 +51,8 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   dir.create(paste0("./", diretorio))
   setwd(paste0("./", diretorio))
 
-  # instalando pacotes
-  packages = c("dismo", "rgdal", "raster", "randomForest", 'maptools', "kernlab")
-  for (p in setdiff(packages, installed.packages()[, "Package"])) {
-    install.packages(p, dependencies = T)
-  }
-
   #importando shape do brasil
-  data(wrld_simpl)
+  data(wrld_simpl, package = "maptools")
   br=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
 
   # MaxEnt .jar#### baixa e descompacta o maxent java
@@ -68,11 +62,11 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     download.file(url, dest = "maxent.zip", mode = "wb")
     unzip("maxent.zip", files = "maxent.jar", exdir = system.file("java", package = "dismo"))
     unlink("maxent.zip")
-    warning("Maxent foi colocado no diret?rio")
+    warning("Maxent foi colocado no diretório")
   }
 
   ##--------------------------##
-  # Pontos de ocorr?ncia####
+  # Pontos de ocorrência####
   ##------------------------##
 
   # Extrair os valores ambientais das localidades onde h? registros de ocorr?ncia
@@ -80,15 +74,14 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     pts = coord
     if (dim(pts)[2] == 2) {
       pts = pts
-    } else (stop("Verique o n?mero de colunas de planilha com as coordenadas"))
+    } else (stop("Verique o número de colunas de planilha com as coordenadas"))
   } else (stop("Não existe objeto com os pontos de ocorrência.", "Verifique o nome do objeto"))
 
-  source("https://raw.githubusercontent.com/diogosbr/modelagem/master/clean.R")
-  pts1 = clean(pts, predictors = predictors)
+  pts1 = modelos::clean(pts, abio)
   names(pts1) = c("long", "lat")
   aa=data.frame(Originais=dim(pts)[1], Unicos=dim(pts1)[1], Retirados=dim(pts)[1]-dim(pts1)[1])
 
-  #Filtros geogr?ficos####
+  #Filtros geográficos####
   if(geo.filt==T){
     res=0.1666667#10min - 20km
     r=raster(extent(range(pts1[,1]), range(pts1[,2])) + res)
