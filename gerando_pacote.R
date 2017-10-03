@@ -1,7 +1,8 @@
 #devtools::setup()
 
-devtools::load_all()
 devtools::document()
+devtools::load_all()
+
 
 #testando as funções
 ?clean

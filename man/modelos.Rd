@@ -2,11 +2,11 @@
 % Please edit documentation in R/modelos4.R
 \name{modelos}
 \alias{modelos}
-\title{Corta raster com base em um shape}
+\title{Gera os modelos}
 \usage{
 modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
   mx = F, GLM = F, RF = F, SVM = F, dm = F, mah = F, proj,
-  buffer = "none", geo.filt = T, mod = "before", tss = 0)
+  buffer = "none", geo.filt.res, mod = "before", tss = 0)
 }
 \arguments{
 \item{coord}{data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
@@ -35,9 +35,9 @@ modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
 
 \item{proj}{stack com as variáveis onde será projetado o modelo. Caso n?o seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).}
 
-\item{buffer}{distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.}
+\item{buffer}{distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos. Ou se for "none", não é usado nehum buffer (padrão).}
 
-\item{geo.filt}{lógico. Se TRUE (padrão), mantem apenas os pontos que estejam no mínimo 20km distantes um do outro.}
+\item{geo.filt.res}{numerico. Mantem apenas os pontos que estejam, no mínimo, distantes um do outro o numero de km informado.}
 
 \item{mod}{quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.}
 

@@ -1,4 +1,4 @@
-#' @title Corta raster com base em um shape
+#' @title Gera os modelos
 #' @name modelos
 #'
 #' @description Uma funcao para geral modelos de nicho ecológico.
@@ -16,8 +16,8 @@
 #' @param dm Domain
 #' @param mah distância de Mahalanobis
 #' @param proj stack com as variáveis onde será projetado o modelo. Caso n?o seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).
-#' @param buffer distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos.
-#' @param geo.filt lógico. Se TRUE (padrão), mantem apenas os pontos que estejam no mínimo 20km distantes um do outro.
+#' @param buffer distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos. Ou se for "none", não é usado nehum buffer (padrão).
+#' @param geo.filt.res numerico. Mantem apenas os pontos que estejam, no mínimo, distantes um do outro o numero de km informado.
 #' @param mod quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.
 #' @param tss numérico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.
 #'
@@ -43,7 +43,7 @@
 #'
 #' @export
 modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx = F, GLM = F, RF = F,
-                   SVM = F, dm = F, mah = F, proj, buffer = 'none', geo.filt = T, mod = 'before', tss = 0) {
+                   SVM = F, dm = F, mah = F, proj, buffer = 'none', geo.filt.res, mod = 'before', tss = 0) {
 
   if(missing(abio)){stop("Informe as variáveis abióticas")}else(predictors=abio)
   original = getwd()
@@ -51,19 +51,18 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   dir.create(paste0("./", diretorio))
   setwd(paste0("./", diretorio))
 
-  #importando shape do brasil
-  data(wrld_simpl, package = "maptools")
-  br=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
-
   # MaxEnt .jar#### baixa e descompacta o maxent java
-  jar <- paste0(system.file(package = "dismo"), "/java/maxent.jar")
-  if (file.exists(jar) != T) {
-    url = "http://biodiversityinformatics.amnh.org/open_source/maxent/maxent.php?op=download"
-    download.file(url, dest = "maxent.zip", mode = "wb")
-    unzip("maxent.zip", files = "maxent.jar", exdir = system.file("java", package = "dismo"))
-    unlink("maxent.zip")
-    warning("Maxent foi colocado no diretório")
+  if(mx == T){
+    jar <- paste0(system.file(package = "dismo"), "/java/maxent.jar")
+    if (file.exists(jar) != T) {
+      url = "http://biodiversityinformatics.amnh.org/open_source/maxent/maxent.php?op=download"
+      download.file(url, dest = "maxent.zip", mode = "wb")
+      unzip("maxent.zip", files = "maxent.jar", exdir = system.file("java", package = "dismo"))
+      unlink("maxent.zip")
+      warning("Maxent foi colocado no diretório")
+    }
   }
+
 
   ##--------------------------##
   # Pontos de ocorrência####
@@ -82,15 +81,11 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   aa=data.frame(Originais=dim(pts)[1], Unicos=dim(pts1)[1], Retirados=dim(pts)[1]-dim(pts1)[1])
 
   #Filtros geográficos####
-  if(geo.filt==T){
-    res=0.1666667#10min - 20km
-    r=raster(extent(range(pts1[,1]), range(pts1[,2])) + res)
-    res(r)=res
-    pts1=gridSample(pts1,r, n=1)
-    cat(paste0(dim(pts1)[1], ' após o filtro geográfico de 20Km'))
-    aa$geo.filt=dim(pts1)[1]
-  }
-  write.table(aa, "Nocc.csv", row.names = F, sep = ";")
+  if(missing(geo.filt.res)==F){
+    pts1 = geo.filt(pts1, resolution = geo.filt.res)
+  }else(pts1=pts1)
+  
+  #write.table(aa, "Nocc.csv", row.names = F, sep = ";")
 
   #--------------#
   # Modelando #####
@@ -101,6 +96,10 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
   #Buffer####
   if( buffer != 'none' ){
+    #importando shape do brasil
+    data(wrld_simpl, package = "maptools")
+    br=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
+    
     pts2=pts1
     names(pts2)=c("lon",'lat')
     coordinates(pts2) <- ~lon + lat
@@ -130,7 +129,6 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   dir.create("./ensembles")
   dir.create("./final")
   dir.create("./png")
-  #dir.create("./temporario")
 
   if (bc == T) {
     # Bioclim #####
