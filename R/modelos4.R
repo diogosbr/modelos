@@ -687,7 +687,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     points(pts1)
     dev.off()
 
-    ### Modelagem at? aqui ###
+    ### Modelagem até aqui ###
 
     if (plot == T) {
       plot(mm)

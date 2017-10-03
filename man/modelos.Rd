@@ -54,7 +54,7 @@ A função mais complexa deste pacote
 }
 \examples{
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
-predictors <- stack(fnames)
+predictors <- raster::stack(fnames)
 occurence <- paste(system.file(package="dismo"), '/ex/bradypus.csv', sep='')
 occ <- read.table(occurence, header=TRUE, sep=',')[,-1]
 modelos(coord = occ, abio = predictors)
