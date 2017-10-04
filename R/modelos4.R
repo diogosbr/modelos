@@ -70,7 +70,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
   # Extrair os valores ambientais das localidades onde há registros de ocorrência
   if (exists("coord")) {
-    if (dim(pts)[2] == 2) {
+    if (dim(coord)[2] == 2) {
       pts = coord
     } else (stop("Verique o número de colunas de planilha com as coordenadas"))
   } else (stop("Não existe objeto com os pontos de ocorrência.", "Verifique o nome do objeto"))
