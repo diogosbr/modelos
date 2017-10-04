@@ -2,24 +2,24 @@
 % Please edit documentation in R/toKML.R
 \name{toKML}
 \alias{toKML}
-\title{Transforma o raster em arquivo KML}
+\title{Transforms the raster into a KML file}
 \usage{
 toKML(modelo, name = "meuKML", zeros = FALSE, open = FALSE)
 }
 \arguments{
-\item{modelo}{raster com o modelo de distribui??o}
+\item{modelo}{raster with the distribution model}
 
-\item{name}{nome do arquivo KML gerado.}
+\item{name}{name of the KML file to be generated.}
 
-\item{zeros}{lógico. Se FALSE, os zeros do modelo s?o convertivos em NA.}
+\item{zeros}{logical. If FALSE, the zeros of the model are convergent in NA.}
 
-\item{open}{lógico. Se TURE, abre o arquivo KML no Google Earth.}
+\item{open}{logical. If TURE, open the KML file in Google Earth.}
 }
 \value{
-data.frame contendo longitude e latitude.
+data.frame containing longitude and latitude.
 }
 \description{
-Uma função para transformar o modelo de nicho de formato raster em arquivo KML.
+A function to transform the niche model from raster format to KML file.
 }
 \details{
 This function is a wrapper for \code{\link[plotKML]{plotKML}} the function from the roxygen2 package. See the documentation and vignettes of that package to learn how to use roxygen.

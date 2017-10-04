@@ -10,7 +10,7 @@ i.mx()
 \item{no_params}{No arguments}
 }
 \value{
-Arquivos raster em um diretório indicado pelo usuário.
+Maxent.jar files in the drive folder.
 }
 \description{
 A function to automate the download of maxent.jar file
