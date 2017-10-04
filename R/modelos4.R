@@ -435,7 +435,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
       #full.model <- glm(pa ~ ., data = envtrain, family = "binomial")
       GLM <- glm(pa ~ ., data = envtrain, family = "binomial")
       #GLM <- step(object = null.model, scope = formula(full.model), direction = "both", trace = F)
-      e <- evaluate(envtest_p, envtest_p, model = GLM, type = "response")
+      e <- evaluate(envtest_p, envtest_p, model = GLM)
       #e <- evaluate(pres_test, backg_test, predictors, type = "response")
 
       #Exemplo do dismo
