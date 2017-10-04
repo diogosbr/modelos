@@ -24,7 +24,7 @@ i.mx = function(){
     download.file(url, dest = "maxent.zip", mode = "wb")
     unzip("maxent.zip", files = "maxent.jar", exdir = system.file("java", package = "dismo"))
     unlink("maxent.zip")
-    warning("Maxent foi colocado no diretório")
+    warning("Maxent foi colocado no diretório\n")
   }
   cat("Maxent.jar OK!")
 } 
