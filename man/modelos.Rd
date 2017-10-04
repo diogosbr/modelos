@@ -9,7 +9,7 @@ modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
   buffer = "none", geo.filt.res, mod = "before", tss = 0)
 }
 \arguments{
-\item{coord}{data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
+\item{coord}{data.frame. Tabela com os dados de ocorrencia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
 
 \item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _stack_}
 
@@ -33,7 +33,7 @@ modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
 
 \item{mah}{distância de Mahalanobis}
 
-\item{proj}{stack com as variáveis onde será projetado o modelo. Caso n?o seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).}
+\item{proj}{stack com as variáveis onde será projetado o modelo. Caso nao seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).}
 
 \item{buffer}{distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos. Ou se for "none", não é usado nehum buffer (padrão).}
 

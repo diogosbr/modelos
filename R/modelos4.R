@@ -3,7 +3,7 @@
 #'
 #' @description Uma funcao para geral modelos de nicho ecológico.
 #'
-#' @param coord data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.
+#' @param coord data.frame. Tabela com os dados de ocorrencia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.
 #' @param abio os rasters a serem cortados. Aceita um objeto do tipo _stack_
 #' @param k número de partições. O padrão são 3.
 #' @param diretorio nome do diretório a ser criado com os resultados na modelagem.
@@ -15,7 +15,7 @@
 #' @param SVM Support Vector Machine
 #' @param dm Domain
 #' @param mah distância de Mahalanobis
-#' @param proj stack com as variáveis onde será projetado o modelo. Caso n?o seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).
+#' @param proj stack com as variáveis onde será projetado o modelo. Caso nao seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).
 #' @param buffer distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos. Ou se for "none", não é usado nehum buffer (padrão).
 #' @param geo.filt.res numerico. Mantem apenas os pontos que estejam, no mínimo, distantes um do outro o numero de km informado.
 #' @param mod quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.
@@ -68,11 +68,10 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   # Pontos de ocorrência####
   ##------------------------##
 
-  # Extrair os valores ambientais das localidades onde h? registros de ocorr?ncia
+  # Extrair os valores ambientais das localidades onde há registros de ocorrência
   if (exists("coord")) {
-    pts = coord
     if (dim(pts)[2] == 2) {
-      pts = pts
+      pts = coord
     } else (stop("Verique o número de colunas de planilha com as coordenadas"))
   } else (stop("Não existe objeto com os pontos de ocorrência.", "Verifique o nome do objeto"))
 
@@ -189,6 +188,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
           # recorte com TSSth
           if(mod=="after"){values(bc.ens)[values(bc.ens) < mean(aval[grep("Bioclim", aval[, 7]), 2])] = 0}
+          
           writeRaster(bc.ens, paste0("./ensembles/", "bc_", "ensemble ", ".tif"), format = "GTiff",
                       overwrite = T)
           png(paste0("./png/", "bc_", "ensemble ", "con.png"))
@@ -648,7 +648,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           values(SVM.ens) = values(SVM.ens)/SVM.ens@data@max
 
           # recorte com TSSth
-          if(mod=="after"){values(bc.ens)[values(SVM.ens) < mean(aval[grep("SVM", aval[, 7]), 2])] = 0}
+          if(mod=="after"){values(SVM.ens)[values(SVM.ens) < mean(aval[grep("SVM", aval[, 7]), 2])] = 0}
           writeRaster(SVM.ens, paste0("./ensembles/", "SVM_", "ensemble ", ".tif"), format = "GTiff",
                       overwrite = T)
           png(paste0("./png/", "SVM_", "ensemble ", "con.png"))
