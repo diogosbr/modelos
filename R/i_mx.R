@@ -7,7 +7,7 @@
 #' 
 #' @details Just download the maxent.jar file from the site: \link[http://biodiversityinformatics.amnh.org/open_source/maxent/maxent.php?op=download ] and places in the package folder dismo
 #'
-#' @return Arquivos raster em um diretório indicado pelo usuário.
+#' @return Maxent.jar files in the drive folder.
 #'
 #' @author Diogo S. B. Rocha
 #'
@@ -24,7 +24,7 @@ i.mx = function(){
     download.file(url, dest = "maxent.zip", mode = "wb")
     unzip("maxent.zip", files = "maxent.jar", exdir = system.file("java", package = "dismo"))
     unlink("maxent.zip")
-    warning("Maxent foi colocado no diretório\n")
+    warning("Maxent has been placed in the directory\n")
   }
   cat("Maxent.jar OK!")
 } 

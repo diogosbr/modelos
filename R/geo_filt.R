@@ -1,14 +1,14 @@
-#' @title Filtro geográfico
+#' @title Geographic filter
 #' @name geo.filt
 #'
-#' @description Uma funcao para geral modelos de nicho ecológico.
+#' @description A function to generate ecological niche models.
 #'
-#' @param coord data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.
-#' @param res numerico. distância mínima (em Km) entre os pontos.
+#' @param coord data.frame. Table with the species' data. It should contain only two columns: long and lat, in that order.
+#' @param res numeric. Minimum distance (in Km) between points.
 #' 
-#' @details Nada por enquanto
+#' @details Nothing for now.
 #'
-#' @return tabela de pontos de ocorrência com distância mínima indicada em res
+#' @return Table of occurrence points with minimum distance indicated in res
 #'
 #' @author Diogo S. B. Rocha
 #'
@@ -24,7 +24,7 @@ geo.filt = function(coord, resolution = 10){
   r=raster(extent(range(coord[,1]), range(coord[,2])) + res)
   res(r)=res
   pts=gridSample(coord,r, n=1)
-  cat(paste0(dim(pts)[1], ' pontos restantes apos o filtro geografico de ', resolution , "km", '\n'))
+  cat(paste0(dim(pts)[1], ' points remaining after the geographic filter of ', resolution , "km", '\n'))
   #aa$geo.filt=dim(pts)[1]
   return(pts)
 }

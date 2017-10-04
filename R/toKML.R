@@ -1,16 +1,16 @@
-#' @title Transforma o raster em arquivo KML
+#' @title Transforms the raster into a KML file
 #' @name toKML
 #'
-#' @description Uma função para transformar o modelo de nicho de formato raster em arquivo KML.
+#' @description A function to transform the niche model from raster format to KML file.
 #'
-#' @param modelo raster com o modelo de distribui??o
-#' @param name nome do arquivo KML gerado.
-#' @param zeros lógico. Se FALSE, os zeros do modelo s?o convertivos em NA.
-#' @param open lógico. Se TURE, abre o arquivo KML no Google Earth.
+#' @param modelo raster with the distribution model
+#' @param name name of the KML file to be generated.
+#' @param zeros logical. If FALSE, the zeros of the model are convergent in NA.
+#' @param open logical. If TURE, open the KML file in Google Earth.
 #'
 #' @details This function is a wrapper for \code{\link[plotKML]{plotKML}} the function from the roxygen2 package. See the documentation and vignettes of that package to learn how to use roxygen.
 #'
-#' @return data.frame contendo longitude e latitude.
+#' @return data.frame containing longitude and latitude.
 #'
 #' @author Diogo S. B. Rocha
 #'
@@ -24,7 +24,7 @@
 #'
 #' @export
 toKML = function(modelo, name = "meuKML", zeros = FALSE, open = FALSE){
-  if(missing(modelo)){stop("Informe o nome do objeto que contem o raster do modelo")}
+  if(missing(modelo)){stop("Enter the name of the object that contains the template raster")}
   if(zeros==FALSE){
     values(modelo)[values(modelo)==0]=NA
     plotKML::plotKML(modelo,folder.name=name,open.kml = open)
