@@ -431,9 +431,9 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
       envtest_a=envtrain[envtrain[,1]==0,]
 
       #adaptado model-R
-      null.model <- glm(pa ~ 1, data = envtrain, family = "binomial")
-      full.model <- glm(pa ~ ., data = envtrain, family = "binomial")
-      GLM <- glm(pa ~ ., data = envtrain)
+      #null.model <- glm(pa ~ 1, data = envtrain, family = "binomial")
+      #full.model <- glm(pa ~ ., data = envtrain, family = "binomial")
+      GLM <- glm(pa ~ ., data = envtrain, family = "binomial")
       #GLM <- step(object = null.model, scope = formula(full.model), direction = "both", trace = F)
       e <- evaluate(envtest_p, envtest_p, model = GLM, type = "response")
       #e <- evaluate(pres_test, backg_test, predictors, type = "response")
