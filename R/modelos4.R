@@ -50,7 +50,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   # escolha da pasta
   dir.create(paste0("./", diretorio))
   setwd(paste0("./", diretorio))
-  
+
   if(mx==T){modelos::i.mx()}
 
   ##--------------------------##
@@ -72,7 +72,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if(missing(geo.filt.res)==F){
     pts1 = geo.filt(pts1, resolution = geo.filt.res)
   }else(pts1=pts1)
-  
+
   #write.table(aa, "Nocc.csv", row.names = F, sep = ";")
 
   #--------------#
@@ -87,12 +87,13 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     #importando shape do brasil
     data(wrld_simpl, package = "maptools")
     br=subset(wrld_simpl, wrld_simpl$NAME=="Brazil")
-    
+
     pts2=pts1
     names(pts2)=c("lon",'lat')
     coordinates(pts2) <- ~lon + lat
     if(buffer=="mean"){dist.buf <- mean(spDists(x = pts1, longlat = FALSE, segments = TRUE))}
     if(buffer=="max"){dist.buf <- max(spDists(x = pts1, longlat = FALSE, segments = TRUE))}
+    if(buffer=="median"){dist.buf <- median(spDists(x = pts1, longlat = FALSE, segments = TRUE))}
 
     buffer <- raster::buffer(pts2, width = dist.buf, dissolve = TRUE)
     buffer <- SpatialPolygonsDataFrame(buffer, data = as.data.frame(buffer@plotOrder),
@@ -177,7 +178,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
           # recorte com TSSth
           if(mod=="after"){values(bc.ens)[values(bc.ens) < mean(aval[grep("Bioclim", aval[, 7]), 2])] = 0}
-          
+
           writeRaster(bc.ens, paste0("./ensembles/", "bc_", "ensemble ", ".tif"), format = "GTiff",
                       overwrite = T)
           png(paste0("./png/", "bc_", "ensemble ", "con.png"))
