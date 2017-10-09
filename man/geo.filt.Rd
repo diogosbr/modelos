@@ -2,23 +2,23 @@
 % Please edit documentation in R/geo_filt.R
 \name{geo.filt}
 \alias{geo.filt}
-\title{Filtro geográfico}
+\title{Geographic filter}
 \usage{
 geo.filt(coord, resolution = 10)
 }
 \arguments{
-\item{coord}{data.frame. Tabela com os dados de oco?ncia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
+\item{coord}{data.frame. Table with the species' data. It should contain only two columns: long and lat, in that order.}
 
-\item{res}{numerico. distância mínima (em Km) entre os pontos.}
+\item{res}{numeric. Minimum distance (in Km) between points.}
 }
 \value{
-tabela de pontos de ocorrência com distância mínima indicada em res
+Table of occurrence points with minimum distance indicated in res
 }
 \description{
-Uma funcao para geral modelos de nicho ecológico.
+A function to generate ecological niche models.
 }
 \details{
-Nada por enquanto
+Nothing for now.
 }
 \examples{
 geo.filt(pts=manimax,res=20)

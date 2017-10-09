@@ -51,21 +51,10 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   dir.create(paste0("./", diretorio))
   setwd(paste0("./", diretorio))
 
-  # MaxEnt .jar#### baixa e descompacta o maxent java
-  if(mx == T){
-    jar <- paste0(system.file(package = "dismo"), "/java/maxent.jar")
-    if (file.exists(jar) != T) {
-      url = "http://biodiversityinformatics.amnh.org/open_source/maxent/maxent.php?op=download"
-      download.file(url, dest = "maxent.zip", mode = "wb")
-      unzip("maxent.zip", files = "maxent.jar", exdir = system.file("java", package = "dismo"))
-      unlink("maxent.zip")
-      warning("Maxent foi colocado no diretório")
-    }
-  }
-
+  if(mx==T){modelos::i.mx()}
 
   ##--------------------------##
-  # Pontos de ocorrência####
+  ## Pontos de ocorrência  ####
   ##------------------------##
 
   # Extrair os valores ambientais das localidades onde há registros de ocorrência
