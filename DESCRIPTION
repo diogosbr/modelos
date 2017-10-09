@@ -6,6 +6,6 @@ Description: Pacote para geração de modelos de nicho ecológico (one paragraph
 Depends: R (>= 3.4)
 License: GNU GPL v2
 Encoding: UTF-8
-LazyData: false
+LazyData: true
 Imports: maptools, raster, dismo, rgeos, rgdal, kernlab, randomForest
 RoxygenNote: 6.0.1
