@@ -7,5 +7,5 @@
 GBIF
 }
 \description{
-Dados de ocorrência de Manilkara maxima oriundas do GBIF
+_Manilkara maxima_ occurrence data from the GBIF
 }

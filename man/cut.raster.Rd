@@ -14,11 +14,11 @@ cut.raster(abio, shape.dir, extension = ".asc", br = FALSE, plot = TRUE,
 
 \item{extension}{extent of the cut rasters. Default is .asc, see\code{\link[raster]{write.raster}} for more output format possibilities.}
 
-\item{br}{logical. If TRUE, use the brazil shape provided by \code{\link[maptools]{wrld_simpl}}. If FALSE (default), use the informed shape.}
+\item{br}{logical. If TRUE, use the Brazil shape provided by \code{\link[maptools]{wrld_simpl}}. If FALSE (default), use the informed shape.}
 
 \item{plot}{logical. Plots one of the cut rasters.}
 
-\item{trim}{logical. If TRUE, exclude pixels with NA (more time consuming). If FALSE (default), keep the NAs.}
+\item{trim}{logical. If TRUE, exclude pixels with NA (very slow). If FALSE (default), keep the NAs.}
 }
 \value{
 Raster files in a folder "Cortados".

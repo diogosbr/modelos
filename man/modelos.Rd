@@ -2,22 +2,22 @@
 % Please edit documentation in R/modelos4.R
 \name{modelos}
 \alias{modelos}
-\title{Gera os modelos}
+\title{Produces ecological niche models}
 \usage{
 modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
   mx = F, GLM = F, RF = F, SVM = F, dm = F, mah = F, proj,
   buffer = "none", geo.filt.res, mod = "before", tss = 0)
 }
 \arguments{
-\item{coord}{data.frame. Tabela com os dados de ocorrencia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.}
+\item{coord}{data.frame. Table with the occurrence data of the species. It should contain only two columns: long and lat, in this order.}
 
-\item{abio}{os rasters a serem cortados. Aceita um objeto do tipo _stack_}
+\item{abio}{the rasters to be cut. Accepts an object of the type _stack_}
 
-\item{k}{número de partições. O padrão são 3.}
+\item{k}{number of partitions. The default is 3.}
 
-\item{diretorio}{nome do diretório a ser criado com os resultados na modelagem.}
+\item{diretorio}{name of the directory to be created with the results in the modeling.}
 
-\item{plot}{lógico. Plota o modelo final.}
+\item{plot}{logical. If TRUE (deafult), plots the final model.}
 
 \item{bc}{bioclim}
 
@@ -31,26 +31,26 @@ modelos(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T,
 
 \item{dm}{Domain}
 
-\item{mah}{distância de Mahalanobis}
+\item{mah}{Mahalanobis distance}
 
-\item{proj}{stack com as variáveis onde será projetado o modelo. Caso nao seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).}
+\item{proj}{_stack_ with the variables where the model will be projected. If you are not informed, the model is projected in the same place of creation of the model (informed in abio).}
 
-\item{buffer}{distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos. Ou se for "none", não é usado nehum buffer (padrão).}
+\item{buffer}{distance chosen to generate a buffer around the occurrence points where the pseudo-absence points will be generated. "mean" is the mean distance between points, "median" is the median distance between points and "max" is the maximum distance between points. Or if it is "none", no buffer is used (default).}
 
-\item{geo.filt.res}{numerico. Mantem apenas os pontos que estejam, no mínimo, distantes um do outro o numero de km informado.}
+\item{geo.filt.res}{numeric. Keep only the points that are at least far from each other the number of kilometers informed.}
 
-\item{mod}{quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.}
+\item{mod}{when the model is cut to generate the ensemble. "before" each partition is cut by its own TSSth. "after" the ensemble of each algorithm is cut by the average TSSth of the partitions.}
 
-\item{tss}{numérico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.}
+\item{tss}{numeric. Selects only models that present higher than reported TSS value.}
 }
 \value{
-Arquivos raster em um diretório indicado pelo usuário.
+Raster files in a user-specified directory.
 }
 \description{
-Uma funcao para geral modelos de nicho ecológico.
+A function to produce ecological niche models.
 }
 \details{
-A função mais complexa deste pacote
+The most complex function of this package
 }
 \examples{
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), pattern='grd', full.names=TRUE )
