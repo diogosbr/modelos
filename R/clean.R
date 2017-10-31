@@ -34,7 +34,7 @@ clean = function(coord, abio) {
             pts1 <- pts1[!is.na(extract(mask, pts1)), ]  #selecionando apenas pontos que tem valor de raster
 
             cat(dim(coord)[1] - dim(pts1)[1], "points removed\n")
-            cat(dim(pts1)[1], "pontos espacialmente únicos\n")
+            cat(dim(pts1)[1], "spatially unique points\n")
             names(pts1) = c("lon", "lat")#
             return(pts1)
         } else (cat("Indicate the object with the predictive variables"))

@@ -1,29 +1,29 @@
-#' @title Gera os modelos
+#' @title Produces ecological niche models
 #' @name modelos
 #'
-#' @description Uma funcao para geral modelos de nicho ecológico.
+#' @description A function to produce ecological niche models.
 #'
-#' @param coord data.frame. Tabela com os dados de ocorrencia da espécie. Deve conter apenas duas colunas: long e lat, nesta ordem.
-#' @param abio os rasters a serem cortados. Aceita um objeto do tipo _stack_
-#' @param k número de partições. O padrão são 3.
-#' @param diretorio nome do diretório a ser criado com os resultados na modelagem.
-#' @param plot lógico. Plota o modelo final.
+#' @param coord data.frame. Table with the occurrence data of the species. It should contain only two columns: long and lat, in this order.
+#' @param abio the rasters to be cut. Accepts an object of the type _stack_
+#' @param k number of partitions. The default is 3.
+#' @param diretorio name of the directory to be created with the results in the modeling.
+#' @param plot logical. If TRUE (deafult), plots the final model.
 #' @param bc bioclim
 #' @param mx Maxent
 #' @param GLM Generalized linear model
 #' @param RF Random Forest (regression)
 #' @param SVM Support Vector Machine
 #' @param dm Domain
-#' @param mah distância de Mahalanobis
-#' @param proj stack com as variáveis onde será projetado o modelo. Caso nao seja informado, o modelo é projetado no mesmo local de cria??o do modelo (informado em abio).
-#' @param buffer distância escolhida para gerar um buffer em torno dos pontos de ocorrência onde será gerados os pontos de pseudo-aus?ncia. "mean" é a distância média entre os pontos e "max" é a distância máxima entre os pontos. Ou se for "none", não é usado nehum buffer (padrão).
-#' @param geo.filt.res numerico. Mantem apenas os pontos que estejam, no mínimo, distantes um do outro o numero de km informado.
-#' @param mod quando o modelo é cortado para gerar o ensemble. "before" cada partição é cortada pelo seu próprio TSSth. "after" o ensemble de cada algoritmo é cortado pelo TSSth médio das partições.
-#' @param tss numérico. Seleciona apenas modelos que apresente valor TSS maior do que o informado.
+#' @param mah Mahalanobis distance
+#' @param proj _stack_ with the variables where the model will be projected. If you are not informed, the model is projected in the same place of creation of the model (informed in abio).
+#' @param buffer distance chosen to generate a buffer around the occurrence points where the pseudo-absence points will be generated. "mean" is the mean distance between points, "median" is the median distance between points and "max" is the maximum distance between points. Or if it is "none", no buffer is used (default).
+#' @param geo.filt.res numeric. Keep only the points that are at least far from each other the number of kilometers informed.
+#' @param mod when the model is cut to generate the ensemble. "before" each partition is cut by its own TSSth. "after" the ensemble of each algorithm is cut by the average TSSth of the partitions.
+#' @param tss numeric. Selects only models that present higher than reported TSS value.
 #'
-#' @details A função mais complexa deste pacote
+#' @details The most complex function of this package
 #'
-#' @return Arquivos raster em um diretório indicado pelo usuário.
+#' @return Raster files in a user-specified directory.
 #'
 #' @author Diogo S. B. Rocha
 #'
@@ -45,7 +45,7 @@
 modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx = F, GLM = F, RF = F,
                    SVM = F, dm = F, mah = F, proj, buffer = 'none', geo.filt.res, mod = 'before', tss = 0) {
 
-  if(missing(abio)){stop("Informe as variáveis abióticas")}else(predictors=abio)
+  if(missing(abio)){stop("Report abiotic variables")}else(predictors=abio)
   original = getwd()
   # escolha da pasta
   dir.create(paste0("./", diretorio))
@@ -61,8 +61,8 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (exists("coord")) {
     if (dim(coord)[2] == 2) {
       pts = coord
-    } else (stop("Verique o número de colunas de planilha com as coordenadas"))
-  } else (stop("Não existe objeto com os pontos de ocorrência.", "Verifique o nome do objeto"))
+    } else (stop("Check the number of columns of the data.frame with the coordinates"))
+  } else (stop("There is no object with occurrence points.", "Check the object name."))
 
   pts1 = modelos::clean(pts, abio)
   names(pts1) = c("long", "lat")
@@ -123,7 +123,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     # Bioclim #####
 
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "Bioclim"))
+      cat(c("\n", "Doing partition", i, "Bioclim"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -186,7 +186,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
           rm(bc.ens)
         }
-        cat(c("\n", "Terminou Bioclim"))
+        cat(c("\n", "Finished Bioclim"))
       }
     }
   }
@@ -195,7 +195,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     # Maxent #####
 
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "Maxent"))
+      cat(c("\n", "Doing partition", i, "Maxent"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -257,7 +257,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
         }
 
-        cat(c("\n", "Terminou Maxent"))
+        cat(c("\n", "Finished Maxent"))
       }
     }
   }
@@ -265,7 +265,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (dm == T) {
     # Domain #####
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "Domain"))
+      cat(c("\n", "Doing partition", i, "Domain"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -327,7 +327,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
           rm(dm.ens)
         }
-        cat(c("\n", "Terminou Domain"))
+        cat(c("\n", "Finished Domain"))
       }
     }
   }
@@ -336,7 +336,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
     # Mahalanobis #####
 
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "Mahalanobis"))
+      cat(c("\n", "Doing partition", i, "Mahalanobis"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -398,7 +398,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
           rm(mah.ens)
         }
-        cat(c("\n", "Terminou Mahalanobis"))
+        cat(c("\n", "Finished Mahalanobis"))
       }
     }
   }
@@ -406,7 +406,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (GLM == T) {
     # GLM ####
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "GLM"))
+      cat(c("\n", "Doing partition", i, "GLM"))
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
       backg_train <- backg[group.a != i, ]
@@ -487,7 +487,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
           rm(GLM.ens)
         }
-        cat(c("\n", "Terminou GLM"))
+        cat(c("\n", "Finished GLM"))
       }
     }
   }
@@ -495,7 +495,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (RF == T) {
     # Random Forest ####
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "RandomForest"))
+      cat(c("\n", "Doing partition", i, "RandomForest"))
 
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
@@ -564,7 +564,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
           rm(RF.ens)
         }
-        cat(c("\n", "Terminou Random Forest"))
+        cat(c("\n", "Finished Random Forest"))
       }
     }
   }
@@ -572,7 +572,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
   if (SVM == T) {
     # SVM ####
     for (i in 1:k) {
-      cat(c("\n", "Começou a partição", i, "SVM"))
+      cat(c("\n", "Doing partition", i, "SVM"))
 
       pres_train <- pts1[group.p != i, ]
       pres_test <- pts1[group.p == i, ]
@@ -646,7 +646,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
           dev.off()
           rm(SVM.ens)
         }
-        cat(c("\n", "Terminou SVM"))
+        cat(c("\n", "Finished SVM"))
       }
     }
   }
@@ -654,7 +654,7 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
 
   # Ensemble final ####
 
-  cat(c("\n", "Começou ensemble geral"))
+  cat(c("\n", "Doing general ensemble"))
   names(aval)[1:6] = names(threshold(e))
   names(aval)[7:11] = c("Algoritmo", "AUC", "TSS", "TSSth", "Partição")
   write.table(na.omit(aval), "Avaliação.csv", sep = ";", dec = ".",row.names = F)
@@ -682,8 +682,8 @@ modelos = function(coord, abio, k = 3, diretorio = "teste", plot = T, bc = T, mx
       points(pts1)
     }
     setwd(original)
-    cat("\nTerminou! Verifique seus modelos.")
-  }else(cat(paste0("\nNenhum modelo apresentou TSS maior que ",tss)))
+    cat("\nFinished! Check your models.")
+  }else(cat(paste0("\nNo model presented TSS greater than ",tss)))
   setwd(original)
   #stop(paste0("Nenhum modelo apresentou TSS maior que ",tss),call. = F)
 }
