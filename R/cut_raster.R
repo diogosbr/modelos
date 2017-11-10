@@ -28,7 +28,7 @@
 #'
 #' @export
 cut.raster =
-  function(abio, shape.dir, extension = ".asc", br = FALSE, plot = TRUE, diretorio = "Cortados", trim = FALSE){
+  function(abio, shape.dir, extension = ".asc", br = FALSE, plot = TRUE, diretorio = "cortados", trim = FALSE){
 
     if (dir.exists(paste0(diretorio)) == F) {
         dir.create(paste0(diretorio))
@@ -47,7 +47,6 @@ cut.raster =
 
     if(class(shape.dir)== "character") {
       shape = rgdal::readOGR(list.files(shape.dir, pattern = ".shp", full.names = T)[1])
-        stop("The directory containing the shape to cut the raster was not specified")
     } else (shape = shape.dir)
 
     crs(shape) = crs(abio)
